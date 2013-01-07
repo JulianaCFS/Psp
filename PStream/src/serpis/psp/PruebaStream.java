@@ -27,6 +27,10 @@ public class PruebaStream {
 		FileOutputStream fileOutputStream = new FileOutputStream(outputFileName);
 		
 		final int bufferSize = 2048;
+		byte[] buffer = new byte[bufferSize];
+		
+		int count = 0;
+		while ((count))
 		
 
 	}
