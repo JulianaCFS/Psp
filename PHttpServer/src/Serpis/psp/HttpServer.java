@@ -10,7 +10,7 @@ import java.util.Scanner;
 import org.omg.CORBA_2_3.portable.OutputStream;
 
 public class HttpServer
- {
+ {	//ejercicio propuesto trozear en tramos para que la lectura sea más simples
 
 	/*
 		con un navegador probar la conexión http://localhost:8080/index.html
@@ -39,7 +39,7 @@ public class HttpServer
 		Scanner scanner = new Scanner(socket.getInputStream());
 		
 		String fileName = "index.html";
-		//se lee lo que se pide
+		//se lee la peticion
 		while (true)
 		{
 			String line = scanner.nextLine();
