@@ -8,10 +8,13 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SimpleServer
 {
 	private static final String newLine = "\r\n";
+	
 	public static void main(String[] args)throws IOException
 	{	
 		final int port = 8080;
@@ -40,28 +43,49 @@ public class SimpleServer
 			serverSocket.close();
 			}
 	 }
-	//implementar correctamente
+	
 	private static String getFileName(InputStream inputStream)
 	{
 		Scanner scanner = new Scanner( inputStream);
 		
-		//String fileName = "index.html";
-		String fileName = ""; 
+		String fileName = "index.html";
+		//String fileName = ""; 
 		
 		//se lee la peticion
 		while (true)
 		{
 			String line = scanner.nextLine();
 			if(line.startsWith("GET"))//Get /index.html HTTP/1.1
-			{
+			{		//opcion1
 				//fileName = line.split(" ")[1].substring(1);//->index.html
 				//System.out.println("fileName=" + fileName);
+					//opcion2
 				//fileName = line.substring(5,line.indexOf(" ",5));
-				int index = 5;
-				while (line.charAt(index) != ' ')
+				//System.out.println("fileName=" + fileName);
+					//opcion3
+				/*int index = 5;
+				while (line.charAt(index) != ' '){
 					fileName += line.charAt(index++);
+					System.out.println("fileName=" + fileName);
+				}
+				System.out.println("fileName=" + fileName);*/
 				
+				//expresion regular
+				/*Pattern patten = Pattern.compile("GET /(?<fileName>.*) HTTP/1.[01]");
+				Matcher matcher = patten.matcher(line);
+				fileName = matcher.group(1); //from 1.7 -> matcher.group("fileName");*/
+				
+				fileName = line.substring(line.indexOf(" ")+2, line.lastIndexOf(" "));
 				System.out.println("fileName=" + fileName);
+				//System.out.println("line.indexOf=" + line.indexOf(" "));
+				//System.out.println("line.LastindexOf =" + line.lastIndexOf(" "));
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				
 			}
 			System.out.println(line);
