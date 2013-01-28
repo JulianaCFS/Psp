@@ -18,8 +18,11 @@ public class SimpleServer
 	public static void main(String[] args)throws IOException
 	{	
 		final int port = 8080;
-		
 		ServerSocket serverSocket = new ServerSocket(port);
+		
+		String threadName = Thread.currentThread().getName();//devuelve el nombre del thread
+		System.out.println("threadName =" + threadName);
+		
 		try
 		{
 			
@@ -47,14 +50,16 @@ public class SimpleServer
 	private static String getFileName(InputStream inputStream)
 	{
 		Scanner scanner = new Scanner( inputStream);
+		final String defaultFileName = "index.html";
 		
-		String fileName = "index.html";
-		//String fileName = ""; 
+		//String fileName = "index.html";
+		String fileName = ""; 
 		
 		//se lee la peticion
 		while (true)
 		{
 			String line = scanner.nextLine();
+			
 			if(line.startsWith("GET"))//Get /index.html HTTP/1.1
 			{		//opcion1
 				//fileName = line.split(" ")[1].substring(1);//->index.html
@@ -69,12 +74,8 @@ public class SimpleServer
 					System.out.println("fileName=" + fileName);
 				}
 				System.out.println("fileName=" + fileName);*/
-				
-				//expresion regular
-				/*Pattern patten = Pattern.compile("GET /(?<fileName>.*) HTTP/1.[01]");
-				Matcher matcher = patten.matcher(line);
-				fileName = matcher.group(1); //from 1.7 -> matcher.group("fileName");*/
-				
+					
+					//opcion5 MiOpcion
 				fileName = line.substring(line.indexOf(" ")+2, line.lastIndexOf(" "));
 				System.out.println("fileName=" + fileName);
 				//System.out.println("line.indexOf=" + line.indexOf(" "));
@@ -92,6 +93,10 @@ public class SimpleServer
 			if (line.equals(""))
 				break;
 		}
+		//cuando se pide el raiz:localhost:8080, aparece el fichero index.
+				if(fileName.equals(""))
+					fileName = defaultFileName;
+				System.out.println("fileName=" + fileName);
 		return fileName;
 	}
 	private static void writeHeader(OutputStream outputStream, String fileName) throws IOException

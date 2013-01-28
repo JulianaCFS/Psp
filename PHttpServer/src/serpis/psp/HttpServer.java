@@ -10,18 +10,10 @@ import java.util.Scanner;
 import org.omg.CORBA_2_3.portable.OutputStream;
 
 public class HttpServer
- {	//ejercicio propuesto trozear en tramos para que la lectura sea más simples
+ {	//Servidor monoHilo y sin está legible.
+	
 
-	/*
-		con un navegador probar la conexión http://localhost:8080/index.html
-				hacer con el terminal telnet -help
-				telnet www.google.es 80
-				Get/index.html HTTP/1.0
-				telnet www.upv.es 80
-				reenvio  Get/no_exist ....
-				gedit www.upv.es
-				Get/index.html HTTP/1.0
-				*/
+	
 	public static void main(String[] args)throws IOException
 	 {
 		final String newLine = "\r\n";
