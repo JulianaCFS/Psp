@@ -5,20 +5,48 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class SimpleServer
+public class SimpleServerMio
 {
 	private static final String newLine = "\r\n";
-	public static void Process(Socket socket) throws IOException
-	{
-		String fileName = getFileName(socket.getInputStream());
-	 	//escribe la cabecera en funcion del archivo
-	 	writeHeader(socket.getOutputStream(),fileName);
-	 	writeFile(socket.getOutputStream(),fileName);
-	 	socket.close();
-	}
+	
+	public static void main(String[] args)throws IOException
+	{	
+		final int port = 8080;
+		ServerSocket serverSocket = new ServerSocket(port);
+		
+		String threadName = Thread.currentThread().getName();//devuelve el nombre del thread
+		System.out.println("threadName =" + threadName);
+		
+		try
+		{
+			
+		
+			while(true)
+		 	{	
+			 	Socket socket = serverSocket.accept();
+			 	
+			 	String fileName = getFileName(socket.getInputStream());
+			 	//escribe la cabecera en funcion del archivo
+			 	writeHeader(socket.getOutputStream(),fileName);
+			 	writeFile(socket.getOutputStream(),fileName);
+			 	socket.close();
+			 	
+			 	}
+			}catch(Exception e){
+				System.err.println("Error:" + e.getMessage());
+				e.printStackTrace();
+				
+			}finally{
+			serverSocket.close();
+			}
+	 }
+	
 	private static String getFileName(InputStream inputStream)
 	{
 		Scanner scanner = new Scanner( inputStream);
@@ -100,8 +128,7 @@ public class SimpleServer
 		int count;
 		while((count = fileInputStream.read(buffer)) != -1){
 			try {
-				System.out.println(Thread.currentThread().getName()+ ".");
-				Thread.sleep(1000);
+				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
